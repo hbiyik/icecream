@@ -55,7 +55,6 @@ public:
 
     void pick_new_id();
 
-    bool check_remote(const Job *job) const;
     bool platforms_compatible(const string &target) const;
     string can_install(const Job *job, bool ignore_installing = false) const;
     bool is_eligible_ever(const Job *job) const;

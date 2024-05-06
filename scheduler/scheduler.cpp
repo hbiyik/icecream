@@ -660,7 +660,7 @@ static list<CompileServer *> filter_ineligible_servers(Job *job)
             }
 
             // Check if remote & if remote allowed
-            if (!cs->check_remote(job)) {
+            if (cs->noRemote()) {
                 trace() << cs->nodeName() << " fails remote job check\n";
                 return false;
             }

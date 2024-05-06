@@ -77,12 +77,6 @@ void CompileServer::pick_new_id()
     m_hostId = ++s_hostIdCounter;
 }
 
-bool CompileServer::check_remote(const Job *job) const
-{
-    bool local = (job->submitter() == this);
-    return local || !m_noRemote;
-}
-
 bool CompileServer::platforms_compatible(const string &target) const
 {
     if (target == hostPlatform()) {
@@ -179,13 +173,13 @@ bool CompileServer::is_eligible_ever(const Job *job) const
                     && features_okay
                     && m_acceptingInConnection
                     && can_install(job, true).size()
-                    && check_remote(job);
+                    && !noRemote();
 #if DEBUG_SCHEDULER > 2
     trace() << nodeName() << " is_eligible_ever: " << eligible << " (jobs_okay " << jobs_okay
         << ", version_okay " << version_okay << ", features_okay " << features_okay
         << ", chroot_or_local " << (m_chrootPossible || job->submitter() == this)
         << ", accepting " << m_acceptingInConnection << ", can_install " << (can_install(job).size() != 0)
-        << ", check_remote " << check_remote(job) << ")" << endl;
+        << ", no_remote " << noRemote() << ")" << endl;
 #endif
     return eligible;
 }
